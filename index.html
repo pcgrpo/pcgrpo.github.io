@@ -36,7 +36,6 @@
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
 </head>
 
 <body>
@@ -52,32 +51,31 @@
               <span class="author-block">
                 <a href="https://armenjeddi.com">Ahmadreza Jeddi</a><sup>1,2,3,*</sup>,</span>
               <span class="author-block">
-                <a href="">Hakki Karaimer</a><sup>1,*</sup>,</span>
+                <a href="">Hakki C. Karaimer</a><sup>1,*</sup>,</span>
 
               <span class="author-block">
-                <a href="">Hue</a><sup>1</sup>,</span>
+                <a href="">Hue Nguyen</a><sup>1</sup>,</span>
 
               <span class="author-block">
-                <a href="">Zhongling</a><sup>1</sup>,</span>
+                <a href="">Zhongling Wang</a><sup>1</sup>,</span>
 
               <span class="author-block">
-                <a href="">Ke </a><sup>1</sup>,</span>
+                <a href="">Ke Zhao</a><sup>1</sup>,</span>
 
               <span class="author-block">
-                <a href="">Javad</a><sup>1,2,3</sup>,</span>
+                <a href="">Javad Rajabi</a><sup>1,2,3</sup>,</span>
 
               <span class="author-block">
-                <a href="">Ran</a><sup>1</sup>,</span>
+                <a href="">Ran Zhang</a><sup>1</sup>,</span>
 
               <span class="author-block">
-                <a href="">Raghav</a><sup>1</sup>,</span>
+                <a href="">Raghav Goyal</a><sup>1</sup>,</span>
 
               <span class="author-block">
-                <a href="">Babak</a><sup>2,3</sup>,</span>
+                <a href="">Babak Taati</a><sup>2,3</sup>,</span>
 
               <span class="author-block">
-                <a href="">Radek</a><sup>1</sup>,</span>
-
+                <a href="">Radek Grzeszczuk</a><sup>1</sup>,</span>
 
             </div>
 
@@ -159,44 +157,43 @@
   <section class="section">
     <div class="container is-max-desktop">
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+      <div class="is-centered has-text-centered">
+        <div class="column">
           <div class="content has-text-justified">
             <p>
-              Puzzle Curriculum GRPO (PC-GRPO) is a supervision-free RL recipe that improves chain-of-thought visual
-              reasoning in VLMs without labels or external verifiers.
-              It trains models on three self-supervised “puzzle” tasks (PatchFit, Rotation, Jigsaw with partial credit)
-              using a difficulty-aware curriculum that avoids flat
-              rewards and vanishing advantages. By tracking and boosting Reasoning–Answer Consistency (RAC), PC-GRPO
-              yields more consistent reasoning, better training
-              stability, and open-source SoTA among supervision-free GRPO models on Qwen-7B/3B across multiple
-              benchmarks.
+              GRPO-style RL post-training has made it much easier to elicit chain-of-thought reasoning in VLMs,
+              but in practice we still see two persistent clusters of issues: optimization and behavior.
+              On the optimization side, existing methods often depend on costly or noisy supervision
+              (human labels or external verifiers), and use flat, sparse reward schemes where easy and hard examples
+              contribute almost equally, leading to vanishing advantages and unstable learning. On the behavior side,
+              GRPO-tuned models tend to overthink irrelevant details, shortcut to statistically likely answers, and
+              frequently produce a final answer that contradicts their own reasoning trace—what we call reasoning–answer
+              inconsistency. The illustration below shows these failure modes on a simple visual puzzle.
             </p>
 
-            <div class="hero-body has-text-centered">
+            <div class="has-text-centered">
 
-              <figure class="image">
+              <figure class="image body-image">
                 <img src="./static/images/bunnies.PNG" alt="Failure modes in current GRPO post-training methods">
               </figure>
 
             </div>
 
             <p>
-              We show that <span class="dnerf">Nerfies</span> can turn casually captured selfie
-              photos/videos into deformable NeRF
-              models that allow for photorealistic renderings of the subject from arbitrary
-              viewpoints, which we dub <i>"nerfies"</i>. We evaluate our method by collecting data
-              using a
-              rig with two mobile phones that take time-synchronized photos, yielding train/validation
-              images of the same pose at different viewpoints. We show that our method faithfully
-              reconstructs non-rigidly deforming scenes and reproduces unseen views with high
-              fidelity.
+              PC-GRPO tackles these challenges with three components. First, it replaces hand-crafted supervision with a
+              puzzle-based RLVR setup using three programmatically verifiable environments—PatchFit, Rotation, and
+              Jigsaw—that provide clean, vision-centric rewards. Second, it uses a difficulty-aware curriculum that
+              upweights medium-difficulty groups to counter flat rewards and stabilize GRPO training. Third, it defines a
+              Reasoning–Answer Consistency (RAC) metric and uses consistency-aware reward schemes to align the chain of
+              thought with the final answer. Together, these ingredients yield state-of-the-art results among open-source,
+              supervision-free vision-centric post-training methods on Qwen2.5-VL-3B and 7B, as shown in the comparison with
+              strong 7B baselines below.
             </p>
 
-            <div class="hero-body has-text-centered">
+            <div class="has-text-centered">
 
-              <figure class="image">
-                <img src="./static/images/spider.PNG" alt="Failure modes in current GRPO post-training methods">
+              <figure class="image body-image">
+                <img src="./static/images/spider.PNG" alt="Diagram comparing PC-GRPO with 7B baselines on 8 vision-centric benchmarks">
               </figure>
 
             </div>
@@ -220,34 +217,48 @@
 
 
 
+  
   <section class="section">
     <div class="container is-max-desktop">
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+      <div class="is-centered has-text-centered">
+        <div class="column">
           <div class="content has-text-justified">
             <p>
-              RAC is super important
+              Reasoning–answer inconsistency—where a model’s final answer contradicts its own chain-of-thought—has been
+              repeatedly observed in the LLM RL literature. Motivated by this, we explicitly track a Reasoning–Answer
+              Consistency (RAC) metric during puzzle post-training, using an open-source Qwen-72B judge to score the
+              alignment between rationales and answers across rollouts. The plot below visualizes how RAC evolves over
+              training alongside three other signals: reward variance, average reward, and response length.
             </p>
 
-            <div class="hero-body has-text-centered">
+            <div class="has-text-centered">
 
-
-              <figure class="image">
-                <img src="./static/images/posttraining_metrics.PNG"
-                  alt="Failure modes in current GRPO post-training methods">
+              <figure class="image body-image">
+                <img src="./static/images/posttraining_metrics.PNG" alt="Metrics during post-training">
               </figure>
 
             </div>
 
             <p>
-              the above shows that
+              In our Jigsaw experiments, vanilla GRPO shows the worst RAC: near the end of training, answers collapse
+              while rationales diverge, leading to a sharp drop in consistency. Adding our difficulty-aware curriculum
+              already reduces this late-stage degradation, and combining it with the CARE consistency-enhancing reward
+              scheme further boosts RAC throughout training. Together, curriculum + CARE yield the highest RAC trajectory
+              among all variants, aligning better reasoning traces with more reliable final answers.
             </p>
+
+
           </div>
         </div>
       </div>
 
   </section>
+
+
+
+
+
 
   <!-- Benchmark Auditing -->
   <section class="hero is-light is-small">
@@ -258,30 +269,35 @@
     </div>
   </section>
 
-
-
   <section class="section">
     <div class="container is-max-desktop">
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+      <div class="is-centered has-text-centered">
+        <div class="column">
           <div class="content has-text-justified">
             <p>
-              An intesting byproduct
+              A useful byproduct of our supervision-free GRPO post-training is benchmark auditing. Because PC-GRPO never
+              relies on noisy human annotations or external verifiers, the resulting models often flag and correct mislabeled
+              samples directly in the evaluation sets. Across several major vision-centric reasoning benchmarks, we find that
+              noisy or questionable annotations are surprisingly common—sometimes affecting more than 10% of the samples.
             </p>
 
-            <div class="hero-body has-text-centered">
+            <div class="has-text-centered">
 
-              <figure class="image">
-                <img src="./static/images/noise_main.PNG" alt="Failure modes in current GRPO post-training methods">
+              <figure class="image body-image">
+                <img src="./static/images/noise_main.PNG" alt="Examples of noise in vision benchmarks">
               </figure>
 
             </div>
 
             <p>
-              this we find a widespread problem and a very major one, community has just started to realize, we are the
-              first to publish in this and offer a practical remedy
+              We view this as a serious issue for the community and invite others to scrutinize benchmark quality alongside model
+              performance. As an initial step, we experiment with an automatic auditing pipeline that uses a mix of high-end VLMs
+              (e.g., GPT, Gemini, Claude) as label critics to detect and filter noisy samples, and we report results under this
+              “cleaned benchmark” protocol in the paper.
             </p>
+
+
           </div>
         </div>
       </div>
@@ -294,7 +310,7 @@
   <section class="hero is-light is-small">
     <div class="hero-body has-text-centered">
       <h1 class="title is-2">
-        <span class="">Results</span>
+        <span class="">Qwen2.5-VL 7B & 3B Performance</span>
       </h1>
     </div>
   </section>
@@ -304,29 +320,29 @@
   <section class="section">
     <div class="container is-max-desktop">
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
+      <div class="is-centered has-text-centered">
+        <div class="column">
           <div class="content has-text-justified">
             <p>
-              The following has the Qwen-7B
+              The results for the 7B baselines and our PC-GRPO variants:
             </p>
 
-            <div class="hero-body has-text-centered">
+            <div class="has-text-centered">
 
-              <figure class="image">
-                <img src="./static/images/7b.png" alt="Failure modes in current GRPO post-training methods">
+              <figure class="image body-image">
+                <img src="./static/images/7b.png" alt="Table for the 7B baselines">
               </figure>
 
             </div>
 
             <p>
-              The following has Qwen-3B
+              The results for the 3B baselines and our PC-GRPO variants:
             </p>
 
-            <div class="hero-body has-text-centered">
+            <div class="has-text-centered">
 
-              <figure class="image">
-                <img src="./static/images/3b.png" alt="Failure modes in current GRPO post-training methods">
+              <figure class="image body-image">
+                <img src="./static/images/3b.png" alt="Table for the 3B baselines">
               </figure>
 
             </div>
