@@ -158,3 +158,9 @@ body {
   width: auto;
   vertical-align: middle;
 }
+
+.body-image {
+  margin: 0 !important;        /* all sides */
+  padding: 8px 0 !important;       /* optional, if padding is an issue too */
+}
+
