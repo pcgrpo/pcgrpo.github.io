@@ -108,11 +108,12 @@
 
                 <!-- HF Models -->
                 <span class="link-block">
-                  <a href="" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+                  <a href="https://huggingface.co/collections/armenjeddi/pc-grpo"
+                    class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
                     <span class="icon">
                       <img src="./static/images/hf-logo.svg" alt="Hugging Face" class="hf-icon">
                     </span>
-                    <span>Models (coming soon)</span>
+                    <span>Models</span>
                   </a>
                 </span>
 
@@ -183,17 +184,21 @@
               PC-GRPO tackles these challenges with three components. First, it replaces hand-crafted supervision with a
               puzzle-based RLVR setup using three programmatically verifiable environments—PatchFit, Rotation, and
               Jigsaw—that provide clean, vision-centric rewards. Second, it uses a difficulty-aware curriculum that
-              upweights medium-difficulty groups to counter flat rewards and stabilize GRPO training. Third, it defines a
+              upweights medium-difficulty groups to counter flat rewards and stabilize GRPO training. Third, it defines
+              a
               Reasoning–Answer Consistency (RAC) metric and uses consistency-aware reward schemes to align the chain of
-              thought with the final answer. Together, these ingredients yield state-of-the-art results among open-source,
-              supervision-free vision-centric post-training methods on Qwen2.5-VL-3B and 7B, as shown in the comparison with
+              thought with the final answer. Together, these ingredients yield state-of-the-art results among
+              open-source,
+              supervision-free vision-centric post-training methods on Qwen2.5-VL-3B and 7B, as shown in the comparison
+              with
               strong 7B baselines below.
             </p>
 
             <div class="has-text-centered">
 
               <figure class="image body-image">
-                <img src="./static/images/spider.PNG" alt="Diagram comparing PC-GRPO with 7B baselines on 8 vision-centric benchmarks">
+                <img src="./static/images/spider.PNG"
+                  alt="Diagram comparing PC-GRPO with 7B baselines on 8 vision-centric benchmarks">
               </figure>
 
             </div>
@@ -217,7 +222,7 @@
 
 
 
-  
+
   <section class="section">
     <div class="container is-max-desktop">
 
@@ -244,7 +249,8 @@
               In our Jigsaw experiments, vanilla GRPO shows the worst RAC: near the end of training, answers collapse
               while rationales diverge, leading to a sharp drop in consistency. Adding our difficulty-aware curriculum
               already reduces this late-stage degradation, and combining it with the CARE consistency-enhancing reward
-              scheme further boosts RAC throughout training. Together, curriculum + CARE yield the highest RAC trajectory
+              scheme further boosts RAC throughout training. Together, curriculum + CARE yield the highest RAC
+              trajectory
               among all variants, aligning better reasoning traces with more reliable final answers.
             </p>
 
@@ -277,9 +283,12 @@
           <div class="content has-text-justified">
             <p>
               A useful byproduct of our supervision-free GRPO post-training is benchmark auditing. Because PC-GRPO never
-              relies on noisy human annotations or external verifiers, the resulting models often flag and correct mislabeled
-              samples directly in the evaluation sets. Across several major vision-centric reasoning benchmarks, we find that
-              noisy or questionable annotations are surprisingly common—sometimes affecting more than 10% of the samples.
+              relies on noisy human annotations or external verifiers, the resulting models often flag and correct
+              mislabeled
+              samples directly in the evaluation sets. Across several major vision-centric reasoning benchmarks, we find
+              that
+              noisy or questionable annotations are surprisingly common—sometimes affecting more than 10% of the
+              samples.
             </p>
 
             <div class="has-text-centered">
@@ -291,9 +300,12 @@
             </div>
 
             <p>
-              We view this as a serious issue for the community and invite others to scrutinize benchmark quality alongside model
-              performance. As an initial step, we experiment with an automatic auditing pipeline that uses a mix of high-end VLMs
-              (e.g., GPT, Gemini, Claude) as label critics to detect and filter noisy samples, and we report results under this
+              We view this as a serious issue for the community and invite others to scrutinize benchmark quality
+              alongside model
+              performance. As an initial step, we experiment with an automatic auditing pipeline that uses a mix of
+              high-end VLMs
+              (e.g., GPT, Gemini, Claude) as label critics to detect and filter noisy samples, and we report results
+              under this
               “cleaned benchmark” protocol in the paper.
             </p>
 
@@ -380,7 +392,7 @@
   }</code></pre>
     </div>
   </section>
-  
+
 
 
   <footer class="footer">
